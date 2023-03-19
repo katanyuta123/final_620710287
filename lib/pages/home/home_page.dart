@@ -1,3 +1,4 @@
+import 'package:election_2566_poll/services/api.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/poll.dart';
@@ -13,6 +14,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Poll>? _polls;
   var _isLoading = false;
+  bool _isError = false;
+  String _errMessage = '';
+
+
 
   @override
   void initState() {
@@ -22,6 +27,28 @@ class _HomePageState extends State<HomePage> {
 
   _loadData() async {
     // todo: Load list of polls here
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+    });
+
+    await Future.delayed(const Duration(seconds: 3), () {});
+
+    try {
+      var result = await ApiClient().getAllPolls();
+      setState(() {
+        _polls = result;
+      });
+    } catch (e) {
+      setState(() {
+        _errMessage = e.toString();
+        _isError = true;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -43,12 +70,56 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+ /* ListView _buildList() {
+    return ListView.builder(
+      itemCount: _polls!.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Text(_polls![index].id.toString()+" "+_polls![index].question+" "+_polls![index].choices.toString());
+
+      },
+    );
+  }*/
+
   ListView _buildList() {
     return ListView.builder(
       itemCount: _polls!.length,
       itemBuilder: (BuildContext context, int index) {
-        // todo: Create your poll item by replacing this Container()
-        return Container();
+
+        return Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                 Column(
+                   children: [
+                     Row(
+                       children: [
+                             Text(_polls![index].id.toString()+". "+_polls![index].question),
+                       ],
+                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child:  Text(_polls![index].choices[index].toString()),
+                      ),
+
+                    ),
+                     Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: ElevatedButton(onPressed: (){
+
+                       },
+                           child:  Text('ดูผลโหวต'),
+                       ),
+                     ),
+                  ],
+                ),
+            ),
+            //_polls![index].choices.toString());
+        );
       },
     );
   }

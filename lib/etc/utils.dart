@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<void> showOkDialog(BuildContext context, String title, String content) async {
+Future<void> showOkDialog(BuildContext context, String title, String content) async { //ไว้เรียกใช้งาน
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button!

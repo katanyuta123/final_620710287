@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:election_2566_poll/models/poll.dart';
+import 'package:election_2566_poll/models/result.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,11 +21,37 @@ extension ParseToString on HttpMethod {
 
 class ApiClient {
   // todo: กำหนด base URL ให้เหมาะสม !!!
-  static const apiBaseUrl = 'xxxxxxxxxxxxxxxxxxx';
+  static const apiBaseUrl = 'https://cpsu-test-api.herokuapp.com/api';
 
   // todo: สร้างเมธอดสำหรับ request ไปยัง API โดยเรียกใช้เมธอด _makeRequest() ที่อาจารย์เตรียมไว้ให้ด้านล่างนี้
   // ดูตัวอย่างได้จากเมธอด getAllStudents(), getStudentById(), etc. ในโปรเจ็ค class_attendance
   // https://github.com/3bugs/cpsu_class_attendance_frontend/blob/master/lib/services/api.dart
+
+  Future<List<Poll>> getAllPolls() async {
+    var responseBody = await _makeRequest(
+      HttpMethod.get,
+      '/polls',
+    );
+    List list = responseBody.data;
+    return list.map((item) => Poll.fromJson(item)).toList();
+  }
+  Future<List<Poll>> getVold() async {
+    var responseBody = await _makeRequest(
+      HttpMethod.get,
+      '/[id]',
+    );
+    List list = responseBody.data;
+    return list.map((item) => Poll.fromJson(item)).toList();
+  }
+  Future<List<Result>> getResult() async {
+    var responseBody = await _makeRequest(
+      HttpMethod.get,
+      '/[id]/results',
+    );
+    List list = responseBody.data;
+    return list.map((item) => Result.fromJson(item)).toList();
+  }
+  //มาต่อการ เรียกใช้ _makeRequest
 
   Future<ResponseBody> _makeRequest(
     HttpMethod httpMethod,
