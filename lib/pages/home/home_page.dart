@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
 
                         },
-                        child:  Text(_polls![index].choices[index].toString()),
+                        child:  Text(_polls![index].choices.toString()),
                       ),
 
                     ),
