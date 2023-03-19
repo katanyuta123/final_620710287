@@ -11,7 +11,7 @@ class PollResultsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         // todo: Add your UI by replacing this Container()
-        // คือชุดของหน้าจอ หน้าเว็บ และองค์ประกอบแบบรูปภาพต่างๆ เช่น ปุ่มและไอคอน ซึ่งจะช่วยให้บุคคลสามารถโต้ตอบกับผลิตภัณฑ์หรือบริการได้
+
         child: Container(),
       ),
     );

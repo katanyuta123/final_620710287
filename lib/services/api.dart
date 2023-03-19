@@ -37,7 +37,7 @@ class ApiClient {
   }
   Future<List<Poll>> getVold() async {
     var responseBody = await _makeRequest(
-      HttpMethod.get,
+      HttpMethod.post,
       '/[id]',
     );
     List list = responseBody.data;
